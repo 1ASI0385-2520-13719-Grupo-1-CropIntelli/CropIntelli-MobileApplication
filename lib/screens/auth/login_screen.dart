@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
-import 'register_method_screen.dart';
+import 'forgot_password/forgot_password_email_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  bool showSuccessMessage = false;
 
   @override
   Widget build(BuildContext context) {
@@ -11,132 +21,152 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Botón atrás
-              IconButton(
-                icon: const Icon(Icons.arrow_back, color: AppColors.primary),
-                onPressed: () => Navigator.pop(context),
-              ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 16),
 
-              const SizedBox(height: 10),
+                // Back arrow
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: AppColors.primary, size: 28),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
 
-              // Titulo
-              const Center(
-                child: Text(
+                const SizedBox(height: 20),
+
+                // Logo
+                Center(
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Icon(Icons.spa, color: Colors.white, size: 70),
+                  ),
+                ),
+
+                const SizedBox(height: 18),
+
+                // Title
+                const Text(
                   "Iniciar Sesión",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors.primary,
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 30),
+                const SizedBox(height: 30),
 
-              _label("Correo electrónico"),
-              _input("Email"),
-
-              _label("Contraseña"),
-              _input("Contraseña", isPassword: true),
-
-              const SizedBox(height: 12),
-
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "¿Olvidaste tu contraseña?",
-                    style: TextStyle(color: AppColors.primary),
+                // Usuario input
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(
+                    color: AppColors.inputBackground,
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Botón ingresar
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                  child: TextField(
+                    controller: userController,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Usuario",
                     ),
                   ),
-                  onPressed: () {},
-                  child: const Text(
-                    "Ingresar",
-                    style: TextStyle(color: Colors.white),
+                ),
+
+                const SizedBox(height: 14),
+
+                // Contraseña input
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(
+                    color: AppColors.inputBackground,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Contraseña",
+                    ),
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 30),
+                const SizedBox(height: 8),
 
-              // Texto crear cuenta
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("¿No tienes una cuenta?  "),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const RegisterMethodScreen()),
-                      );
+                // Forgot password button
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ForgotPasswordEmailScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "¿Olvidó Contraseña?",
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                // Login button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showSuccessMessage = true;
+                      });
                     },
                     child: const Text(
-                      "Crear cuenta",
+                      "Iniciar sesión",
                       style: TextStyle(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                   ),
+                ),
+
+                if (showSuccessMessage) ...[
+                  const SizedBox(height: 12),
+                  const Text(
+                    "Inicio de Sesión exitoso",
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
-              ),
 
-              const SizedBox(height: 40),
-            ],
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _label(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: AppColors.primary,
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-
-  Widget _input(String hint, {bool isPassword = false}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.inputBackground,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: TextField(
-        obscureText: isPassword,
-        decoration: InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
-import '../auth/login_screen.dart';
-import '../auth/register_method_screen.dart';
+import 'login_method_screen.dart';
+import 'register_method_screen.dart';
 
 class AuthWelcomeScreen extends StatelessWidget {
   const AuthWelcomeScreen({super.key});
@@ -15,16 +15,15 @@ class AuthWelcomeScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 60),
 
-            Center(
-              child: Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Icon(Icons.spa, color: Colors.white, size: 70),
+            // Logo
+            Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(16),
               ),
+              child: const Icon(Icons.spa, color: Colors.white, size: 70),
             ),
 
             const SizedBox(height: 24),
@@ -41,23 +40,23 @@ class AuthWelcomeScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // Botón iniciar sesión
-            _mainBtn(
+            // BOTÓN INICIAR SESIÓN
+            _btn(
               text: "Iniciar sesión",
-              onTap: () {
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  MaterialPageRoute(builder: (_) => const LoginMethodScreen()),
                 );
               },
             ),
 
             const SizedBox(height: 16),
 
-            // Botón registrarse
-            _mainBtn(
+            // BOTÓN REGISTRARSE —–> AHORA SÍ FUNCIONA
+            _btn(
               text: "Registrarse",
-              onTap: () {
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const RegisterMethodScreen()),
@@ -70,12 +69,12 @@ class AuthWelcomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _mainBtn({required String text, required VoidCallback onTap}) {
+  Widget _btn({required String text, required VoidCallback onPressed}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: SizedBox(
-        width: double.infinity,
         height: 50,
+        width: double.infinity,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
@@ -83,7 +82,7 @@ class AuthWelcomeScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          onPressed: onTap,
+          onPressed: onPressed,
           child: Text(text, style: const TextStyle(color: Colors.white)),
         ),
       ),
