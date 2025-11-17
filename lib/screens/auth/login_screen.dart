@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import 'forgot_password/forgot_password_email_screen.dart';
+import '../main/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,11 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const SizedBox(height: 16),
 
-                // Back arrow
+                // Flecha atrás
                 Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: AppColors.primary, size: 28),
+                    icon: const Icon(Icons.arrow_back,
+                        color: AppColors.primary, size: 28),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
@@ -54,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 18),
 
-                // Title
+                // Título
                 const Text(
                   "Iniciar Sesión",
                   textAlign: TextAlign.center,
@@ -67,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 30),
 
-                // Usuario input
+                // Usuario
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   decoration: BoxDecoration(
@@ -85,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 14),
 
-                // Contraseña input
+                // Contraseña
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   decoration: BoxDecoration(
@@ -104,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 8),
 
-                // Forgot password button
+                // Olvidó contraseña
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -125,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 10),
 
-                // Login button
+                // Botón iniciar sesión
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -139,6 +141,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       setState(() {
                         showSuccessMessage = true;
+                      });
+
+                      Future.delayed(const Duration(milliseconds: 800), () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const MainScreen(),
+                          ),
+                          (route) => false,
+                        );
                       });
                     },
                     child: const Text(
