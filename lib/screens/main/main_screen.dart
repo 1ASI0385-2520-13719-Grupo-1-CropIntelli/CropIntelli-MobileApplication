@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
+import 'diagnostic_howto_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -9,7 +10,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // Ahora empezamos en 0 -> pestaña "Inicio"
+  // Inicio por defecto
   int _currentIndex = 0;
 
   @override
@@ -229,6 +230,10 @@ class HomePage extends StatelessWidget {
             child: Row(
               children: const [
                 _QuickActionCard(
+                  icon: Icons.add_a_photo_outlined,
+                  label: "Nuevo\ndiagnóstico",
+                ),
+                _QuickActionCard(
                   icon: Icons.history,
                   label: "Ver\nhistorial",
                 ),
@@ -358,14 +363,21 @@ class _RecommendationCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          
+          const Text(
+            "Ver más",
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 12,
+              decoration: TextDecoration.underline,
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-// ===================== DIAGNÓSTICO =====================
+// ===================== DIAGNÓSTICO (primer pantalla) =====================
 
 class DiagnosticoPage extends StatelessWidget {
   const DiagnosticoPage({super.key});
@@ -419,7 +431,12 @@ class DiagnosticoPage extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              // Aquí luego conectarás cámara
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DiagnosticHowToScreen(),
+                ),
+              );
             },
             child: const Text(
               'Tomar foto del cultivo',
@@ -445,7 +462,7 @@ class DiagnosticoPage extends StatelessWidget {
   }
 }
 
-// ===================== PESTAÑAS PLACEHOLDER =====================
+// ===================== PLACEHOLDERS =====================
 
 class HistorialPage extends StatelessWidget {
   const HistorialPage({super.key});
